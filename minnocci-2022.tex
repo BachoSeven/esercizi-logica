@@ -1,0 +1,215 @@
+\documentclass[a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage[italian]{babel}
+\usepackage{hyperref}
+\usepackage{amsmath, amssymb, amsthm}
+% for \lightning
+\usepackage{stmaryrd}
+\usepackage{geometry}
+\usepackage{tikz-cd}
+
+\hypersetup{
+	colorlinks = true, % links instead of boxes
+	urlcolor   = blue, % external hyperlinks
+	linkcolor  = blue, % internal links
+	citecolor  = red   % citations
+}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\limplies}{\rightarrow}
+\newcommand{\liff}{\leftrightarrow}
+
+\renewcommand{\labelitemii}{$\circ$}
+\renewcommand{\Im}{\operatorname{Im}}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\theoremstyle{definition}
+\newtheorem{example}{Example}[section]
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Esercizio}[section]
+\newtheorem*{exercise*}{Esercizio}
+
+\title{Esercizi del Corso di Logica Matematica 2022/2023}
+\author{Francesco Minnocci}
+\begin{document}
+\maketitle
+\section{Calcolo Proposizionale}
+\begin{remark}
+	Nel seguito, i valori di verità \textbf{falso} e \textbf{vero} verrano indicati per comodità rispettivamente con i numeri $0$ ed $1$.
+\end{remark}
+\setcounter{exercise}{6}
+\begin{exercise}
+	Mostrare che \(\rho(A)=\min\left\{ n\in\N \,|\: A\in \mathcal{F}_n \right\} \).
+\end{exercise}
+Visto che \(A\) è una formula sul linguaggio \(\mathcal{L}\), esiste un \( n \in \N \) tale che \(A\in \mathcal{F}_n\), quindi per il principio del minimo è ben definito
+\[\min\left\{ n\in\N \,|\: A\in \mathcal{F}_n \right\}.\]
+Procediamo ora per induzione su \(n\):
+\begin{itemize}
+	\item Se \(n=0\), \(A\) è una variabile e quindi \(\rho\left( A \right) =0\) e questo è anche il minimo.
+	\item Se \(A\in \mathcal{F}_{n+1}\), essendo \[ \mathcal{F}_{n+1}=\mathcal{F}_n\cup \{\lnot P,\; P \land Q ,\; P\lor Q,\; P \limplies Q,\; P \liff Q \,|\: P,Q \in
+		\mathcal{F}_n\} ,\]si distinguono due casi:
+		se \(A\in \mathcal{F}_{n}\) si conclude per ipotesi induttiva, mentre se \(A\in \mathcal{F}_{n+1}\setminus \mathcal{F}_n\) si ha che \(n+1\) è il minimo livello in cui
+		compare \(A\), e quindi se mostriamo che \(\rho(A)=n+1 \) abbiamo concluso. Si pongono perciò altri due casi:
+		\begin{itemize}
+			\item \(A=\lnot B\): \(\rho\left( A \right) = \rho\left( B \right) + 1\) con \(B\in \mathcal{F}_n\), e quindi per ipotesi induttiva \(\rho(B) \leq n\), ma non può essere \(\rho(B)<n\) perché altrimenti
+				\(A\in \mathcal{F}_n\), e quindi \(\rho(B)=n\) da cui \(\rho(A)=n+1\).
+			\item \(A=B\;\Diamond\;C\) con \(\Diamond\in\{\land,\lor,\limplies,\liff\}\): \(\rho(A)=\max\{\rho(B),\rho(C)\}+1\) con \(B,C\in \mathcal{F}_n\), ma allora
+				per ipotesi induttiva \(\max\{\rho(B),\rho(C)\}\leq n\), ma come nel caso precedente la disuguaglianza non può essere stretta, in quanto altrimenti si
+				avrebbe \(A\in \mathcal{F}_n\), per cui anche qui \(\rho(A)=n+1\).
+		\end{itemize}
+\end{itemize}
+\hfill\(\square\)
+\begin{exercise}
+	Mostrare che se \(\rho(A)=n\) e \(k_A\) è il numero di connettivi presenti in A, allora \[ n\leq k\leq 2^n -1.\]
+\end{exercise}
+Procediamo per induzione su \(n\):
+\begin{itemize}
+	\item Se \(\rho(A)=0\) allora \(A\) è una variabile e quindi \(k_A=0\), quindi la disuguaglianza vale.
+	\item Se \(\rho(A)=n+1\), distinguiamo i soliti casi:
+		\begin{itemize}
+			\item \(A=\lnot B\): allora \(\rho(B)=n\) che per ipotesi induttiva implica \(n\leq k_B\leq 2^n-1\), e visto che \(k_A=k_B+1\) si ha \[n+1\leq k_A \leq
+				2^n\leq 2^n + \left( 2^n - 1 \right) = 2^{n+1} - 1\]
+			\item \(A=B\;\Diamond\;C\) con \(\Diamond\in\{\land,\lor,\limplies,\liff\}\): essendo \(\max\{\rho(B),\rho(C)\}=n\) e \(k_A=k_B+k_C+1\), utilizzando
+				l'ipotesi induttiva per \(B\) e \(C\) otteniamo
+				\[ n+1=\max\{\rho(B),\rho(C)\}+1\leq\max\{k_B,k_C\}+1\leq k_A,\]
+				ed anche
+				\[ k_A \leq 2\cdot\max\{k_B,k_C\}+1\leq 2\cdot\max\{2^{\rho(B)}-1,2^{\rho(C)}-1\}+1=2^{n+1}-1,\]
+				da cui segue la tesi.
+		\end{itemize}
+\end{itemize}
+\begin{exercise*}\phantomsection\label{unicità}
+	Mostrare che qualsiasi due interpretazioni di un linguaggio \(\mathcal{L}\) che estendono un stesso $\mathcal{L}$-assegnamento coincidono.
+\end{exercise*}
+Per mostrarlo, conviene ripercorrere la dimostrazione effettuata in classe per l'esistenza di un interpretazione delle formule che estende una specifica
+funzione \(\alpha:\text{Form}\left( \mathcal{L} \right) \to \{0,1\}\), accorgendosi che nei vari casi c'è una sola scelta
+possibile; infatti, mostrando che nel passo induttivo la definizione di \(I_\alpha\left( A \right) \) è obbligata, restringendoci a formule costruite con \(
+\lnot, \land, \lor\) (visto che \(\limplies,\liff\) si possono costruire a partire da essi):
+\begin{itemize}
+	\item \(A=\lnot B\): per induzione è ben definito $I_{\alpha}\left( B \right).$ Supponiamo che \(I_{\alpha}\left( B \right)=0\), allora se per assurdo ponessimo \(I_{\alpha}\left( A \right)=0\) non
+		varrebbe che \[ I_{\alpha}\left( B \right) = 0 \iff I_{\alpha}\left( \lnot B \right) = 1,\] contraddicendo la definizione di interpretazione booleana; il caso
+		\(I_{\alpha}\left( B \right) = 1\) è del tutto analogo.
+	\item \(A=B\land C\): per ipotesi induttiva sono ben definiti $I_{\alpha}\left( B \right), I_{\alpha}\left( C \right) $. Per definizione di interpretazione booleana, deve
+		valere che $$ I\left( A \right) =1 \iff I_{\alpha}\left( B \right) =I_{\alpha}\left( C \right)=1  ,$$
+		ma allora anche qui non possiamo effettuare alcuna scelta nella definizione di $I_{\alpha}\left( A \right) .$
+	\item \(A=B\lor C\): si procede in maniera simile al caso precedente, essendo $I_{\alpha}$ univocamente determinato dai valori di $I_{\alpha}$ su $B$ e $C$.
+\end{itemize}
+\setcounter{exercise}{11}
+\begin{exercise}
+	Dimostrare che per ogni funzione $\operatorname{f}: \{0, 1\}^{\{1,\cdots,n\}} \to \{0, 1\}$ esiste una formula $A$ nelle sole variabili $X_1, \cdots ,
+	X_n$ che ha come tabella di verità $\tau_A=f$.
+\end{exercise}
+\setcounter{exercise}{13}
+\begin{exercise}[Modus Ponens]
+	Se $\models A\limplies B$ e $\models A$, allora $\models B$.
+\end{exercise}
+Sia $I$ una qualsiasi interpretazione delle $\mathcal{L}$-formule. Allora $I(A)=1$ e $I(A\limplies B)=1$, quindi per definizione di interpretazione booleana deve valere $I(B)=1$.
+\begin{exercise}
+Mostrare che le seguenti formule sono tautologie per ogni scelta della formula $A$:
+\begin{align*}
+	A\lor\lnot A\\
+	A\limplies A\\
+	A\liff \lnot\lnot A
+.\end{align*}
+\end{exercise}
+Il risultato si evince dalle tabella di verità di tali formule(omettendo $\lnot\lnot A$ che è banalmente $A$):
+\begin{displaymath}
+\begin{array}{c|cccc}
+A & \lnot A & A\lor\lnot A & A\limplies A & A\liff \lnot\lnot A\\
+\hline
+1 & 0 & 1 & 1 & T\\
+0 & 1 & 1 & 1 & T\\
+\end{array}
+\end{displaymath}
+\begin{exercise}[Assiomi di Lukasiewicz-Frege-Hilbert-Mendelson]
+	Le seguenti formule sono tautologie:
+	\begin{align}
+	&A \limplies \left( B\limplies A \right) \label{t1} \\
+	&\left( A \limplies \left( B \limplies C \right)  \right) \limplies \left( \left( A\limplies B \right) \limplies \left( A \limplies C \right)  \right) \label{t2} \\
+	&\left( \lnot A\limplies\lnot B \right) \limplies \left( \left( \lnot A \limplies B \right) \limplies A \right) \label{t3}
+.\end{align}
+\end{exercise}
+Riduciamo tali formule utilizzando le adeguate proprietà (commutative, associative, distributive e leggi di De Morgan) dei connettivi, e l'equivalenza logica fra $A \limplies B$ e $\lnot A \lor B$: le formule \eqref{t1}, \eqref{t2} e \eqref{t3} diventano rispettivamente
+\setcounter{equation}{0}
+\begin{align*}
+	&\lnot A \lor \left( \lnot B \lor A \right) \\\equiv& \left( A\lor\lnot A  \right) \lor \lnot B, \numberthis\\\\
+	&\lnot A \lor \left( \lnot B \lor C \right) \limplies \lnot \left( \lnot A \lor B \right)  \lor \left( \lnot A \lor C \right)  \\\equiv& \lnot \left( \lnot A\lor\lnot B\lor C
+\right) \lor \left( A\land \lnot B \right) \lor \left( \lnot A \lor C\right) \\\equiv& \left( A\land B\land \lnot C \right)\lor \left( A\lor \lnot A \right) \land \left( \lnot
+B \lor \lnot A\right) \lor C \\\equiv& \left( A\lor \lnot A \right)\lor \left( A\land B\land \lnot C \right) \land \left(  \lnot A \lor\lnot
+B \lor C\right)\\\equiv&\left( A\lor\lnot A \right) \lor \left( D\land \lnot D \right),\numberthis\\\\
+		       &\lnot\left( A\lor\lnot B \right) \lor \left( \lnot\left( A\lor B \right) \lor A \right) \\\equiv& \left( \lnot A\land B \right) \lor\left( \left( \lnot A \land\lnot B \right) \lor A
+\right) \\\equiv&
+\left( \lnot A\land B \right) \lor \left( \left( \lnot A\lor A \right) \land\left( \lnot B\lor A \right)  \right) \\\equiv& \left( (\lnot A \land B)\lor(\lnot A\lor A) \right) \land
+\left( \left( \lnot A\land B \right) \lor \left( \lnot B\lor A \right)  \right) \\\equiv
+															  &\left( A\lor\lnot A \right) \lor E\lor\left( E\land\lnot
+															  E \right)\numberthis,
+\end{align*}
+dove ci siamo fermati con le manipolazioni appena abbiamo ottenuto una tautologia, considerando alla luce dell'esercizio 1.15 le formule del tipo $A\lor\lnot A$ tautologie, ed abbiamo posto $D:=\left( A\land B\land\lnot C \right) $ ed $E:=\left( \lnot A\land B \right) $.
+\begin{exercise}
+	 Dimostrare che non esistono tautologie $A$ dove compaiono soltanto i connettivi $\lor$ e $\land$.
+\end{exercise}
+Sia per assurdo $A$ una tautologia nelle sole variabili $X_1,\cdots,X_n$ in cui compaiono solo $\land$ e $\lor$.
+Allora, fissata un'interpretazione $I$ tale che $I( X_1 )
+=\cdots=I(X_n )=0$, da una facile induzione su $\rho(A)$ e dall'ispezione diretta delle tabelle di verità dei connettivi $\land$ e $\lor$ (per entrambi è impossibile ottenere $1$
+da formule entrambe con valore $0$), concludiamo che $I( A ) =0$, contro l'ipotesi che A fosse una
+tautologia.
+\setcounter{exercise}{18}
+\begin{exercise}
+	Sia $A$ una formula in $\mathcal{L}$ nelle sole $n$ variabili proposizionali $X_1,\cdots,X_n $. Allora, A è una tautologia se e solo se $A\left( B_1\slash X_1,\cdots, B_n\slash X_n \right) $ è una
+	tautologia per ogni scelta delle formule $B_1,\cdots,B_n$.
+\end{exercise}
+Per induzione su $n$: se $n=1$, data un'interpretazione $I_1$ definiamo l'interpretazione $I_2$ che coincide con $I_1$ su $X_2,\cdots,X_n$, e tale che
+$I_2(X_1)=I_1(B_1)$, che è
+unica per un esercizio \hyperref[unicità]{precedente}. Allora, si ha
+$I_2(A)=I_1(A(B_1\slash X_1))=1,$ visto che $A$ è una tautologia.
+Il passo induttivo segue poi facilmente, visto che possiamo effettuare le sostituzioni una per volta.
+
+Mostriamo il viceversa per contrapositivo: se $A\left( B_1\slash X_1,\cdots, B_n\slash X_n \right)$ non è
+contraddittoria per ogni scelta delle formule $B_1,\cdots,B_n$, allora è una tautologia, e quindi scegliendo $B_i=X_i$ per ogni $i$ otteniamo che $A$ è una tautologia.
+\setcounter{exercise}{28}
+\begin{exercise}
+	Mostrare che ogni formula è equivalente ad una in cui compaiono solo i seguenti connettivi:
+	\begin{enumerate}
+		\item $\left\{ \lnot,\land \right\}$
+		\item $\left\{ \lnot,\lor \right\}$
+	\end{enumerate}
+	Mostrare inoltre che non vale tale proprietà per i seguenti connettivi:
+	\begin{enumerate}
+		\item $\left\{ \land,\lor \right\}$
+		\item $\left\{ \lnot,\liff \right\}$
+		\item $\left\{ \liff,\lor \right\}$
+	\end{enumerate}
+\end{exercise}
+\noindent
+Sia $A$ una formula,
+
+Inoltre, per l'esercizio X $\left\{ \land,\lor \right\} $ non possono avere la proprietà menzionata visto che in particolare una tautologia non può contenere solo tali connettivi;
+\setcounter{exercise}{30}
+\begin{exercise}
+	Per ogni formula $A$ esiste una formula $B\equiv A$ nella quale compare soltanto il connettivo "entrambe false" $\star$.
+\end{exercise}
+Utilizzando l'esercizio 1.29, ci basta mostrare ad esempio che una formula scritta solo con i connettivi $\left\{ \lnot,\lor \right\}$ è equivalente ad una formula che usa solamente il connettivo $\star$: infatti, osserviamo che per
+definizione di tale connettivo si ha, per ogni scelta delle formule $A,B$ :
+\begin{itemize}
+	\item $\lnot A\equiv A\star A$
+	\item $A\lor B\equiv\lnot\left( A\star B \right) \equiv \left( A\star B \right) \star\left( A\star B \right) $
+\end{itemize}
+\section{Teorie Proposizionali}
+\end{document}
