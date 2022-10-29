@@ -111,11 +111,6 @@ possibile; infatti, mostrando che nel passo induttivo la definizione di \(I_\alp
 		ma allora anche qui non possiamo effettuare alcuna scelta nella definizione di $I_{\alpha}\left( A \right) .$
 	\item \(A=B\lor C\): si procede in maniera simile al caso precedente, essendo $I_{\alpha}$ univocamente determinato dai valori di $I_{\alpha}$ su $B$ e $C$.
 \end{itemize}
-\setcounter{exercise}{11}
-\begin{exercise}
-	Dimostrare che per ogni funzione $\operatorname{f}: \{0, 1\}^{\{1,\cdots,n\}} \to \{0, 1\}$ esiste una formula $A$ nelle sole variabili $X_1, \cdots ,
-	X_n$ che ha come tabella di verità $\tau_A=f$.
-\end{exercise}
 \setcounter{exercise}{13}
 \begin{exercise}[Modus Ponens]
 	Se $\models A\limplies B$ e $\models A$, allora $\models B$.
@@ -162,7 +157,7 @@ B \lor C\right)\\\equiv&\left( A\lor\lnot A \right) \lor \left( D\land \lnot D \
 															  E \right)\numberthis,
 \end{align*}
 dove ci siamo fermati con le manipolazioni appena abbiamo ottenuto una tautologia, considerando alla luce dell'esercizio 1.15 le formule del tipo $A\lor\lnot A$ tautologie, ed abbiamo posto $D:=\left( A\land B\land\lnot C \right) $ ed $E:=\left( \lnot A\land B \right) $.
-\begin{exercise}
+\begin{exercise}\label{connettivi}
 	 Dimostrare che non esistono tautologie $A$ dove compaiono soltanto i connettivi $\lor$ e $\land$.
 \end{exercise}
 Sia per assurdo $A$ una tautologia nelle sole variabili $X_1,\cdots,X_n$ in cui compaiono solo $\land$ e $\lor$.
@@ -190,17 +185,26 @@ contraddittoria per ogni scelta delle formule $B_1,\cdots,B_n$, allora è una ta
 		\item $\left\{ \lnot,\land \right\}$
 		\item $\left\{ \lnot,\lor \right\}$
 	\end{enumerate}
-	Mostrare inoltre che non vale tale proprietà per i seguenti connettivi:
-	\begin{enumerate}
-		\item $\left\{ \land,\lor \right\}$
-		\item $\left\{ \lnot,\liff \right\}$
-		\item $\left\{ \liff,\lor \right\}$
-	\end{enumerate}
+	Mostrare inoltre che non vale tale proprietà per i connettivi $\left\{ \land,\lor \right\}$.
 \end{exercise}
 \noindent
-Sia $A$ una formula,
-
-Inoltre, per l'esercizio X $\left\{ \land,\lor \right\} $ non possono avere la proprietà menzionata visto che in particolare una tautologia non può contenere solo tali connettivi;
+Riduciamo ogni formula con un solo connettivo ad una equivalente in cui compaiono solamente i connettivi citati, dopodiché la tesi seguirà per induzione strutturale sulla
+costruzione delle formule (facciamo uso delle leggi di De Morgan e delle altre proprietà note dei connettivi):
+\begin{enumerate}
+	\item
+		\begin{itemize}
+			\item $A\limplies B\equiv\lnot\left( A\land\lnot B \right)$
+			\item $A\liff B\equiv \left( A\land B \right) \land \left( \lnot A \land\lnot B \right) $
+			\item $A\lor B\equiv\lnot\left( \lnot A \land \lnot B \right) $
+		\end{itemize}
+	\item
+		\begin{itemize}
+			\item $A\limplies B\equiv\lnot A\lor B$
+			\item $A\liff B\equiv \left( \lnot A\lor \lnot B \right) \lor \left( A \lor B \right) $
+			\item $A\land B\equiv\lnot\left( \lnot A \lor\lnot B \right) $
+		\end{itemize}
+\end{enumerate}
+Inoltre, per l'esercizio \hyperref[connettivi]{1.17} $\left\{ \land,\lor \right\} $ non possono avere la proprietà menzionata, visto che in particolare una tautologia non può contenere solo tali connettivi.
 \setcounter{exercise}{30}
 \begin{exercise}
 	Per ogni formula $A$ esiste una formula $B\equiv A$ nella quale compare soltanto il connettivo "entrambe false" $\star$.
@@ -208,8 +212,8 @@ Inoltre, per l'esercizio X $\left\{ \land,\lor \right\} $ non possono avere la p
 Utilizzando l'esercizio 1.29, ci basta mostrare ad esempio che una formula scritta solo con i connettivi $\left\{ \lnot,\lor \right\}$ è equivalente ad una formula che usa solamente il connettivo $\star$: infatti, osserviamo che per
 definizione di tale connettivo si ha, per ogni scelta delle formule $A,B$ :
 \begin{itemize}
-	\item $\lnot A\equiv A\star A$
-	\item $A\lor B\equiv\lnot\left( A\star B \right) \equiv \left( A\star B \right) \star\left( A\star B \right) $
+	\item $\lnot A\equiv A\star A$,
+	\item $A\lor B\equiv\lnot\left( A\star B \right) \equiv \left( A\star B \right) \star\left( A\star B \right) $.
 \end{itemize}
 \section{Teorie Proposizionali}
 \end{document}
