@@ -20,6 +20,7 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\Q}{\mathbb{Q}}
+\newcommand{\K}{\mathbb{K}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\A}{\mathbb{A}}
 \newcommand{\Z}{\mathbb{Z}}
@@ -176,19 +177,20 @@ unica per un esercizio \hyperref[unicità]{precedente}. Allora, si ha
 $I_2(A)=I_1(A(B_1\slash X_1))=1,$ visto che $A$ è una tautologia.
 Il passo induttivo segue poi facilmente, visto che possiamo effettuare le sostituzioni una per volta.
 
-Mostriamo il viceversa per contrapositivo: se $A\left( B_1\slash X_1,\cdots, B_n\slash X_n \right)$ non è
+Mostriamo il viceversa tramite contronominale se $A\left( B_1\slash X_1,\cdots, B_n\slash X_n \right)$ non è
 contraddittoria per ogni scelta delle formule $B_1,\cdots,B_n$, allora è una tautologia, e quindi scegliendo $B_i=X_i$ per ogni $i$ otteniamo che $A$ è una tautologia.
 \setcounter{exercise}{28}
-\begin{exercise}
+\begin{exercise}\label{equivalenze}
 	Mostrare che ogni formula è equivalente ad una in cui compaiono solo i seguenti connettivi:
 	\begin{enumerate}
 		\item $\left\{ \lnot,\land \right\}$
 		\item $\left\{ \lnot,\lor \right\}$
+		\item $\left\{ \lnot,\limplies \right\}$
 	\end{enumerate}
 	Mostrare inoltre che non vale tale proprietà per i connettivi $\left\{ \land,\lor \right\}$.
 \end{exercise}
 \noindent
-Riduciamo ogni formula con un solo connettivo ad una equivalente in cui compaiono solamente i connettivi citati, dopodiché la tesi seguirà per induzione strutturale sulla
+Riduciamo ogni formula con un solo connettivo ad una logicamente equivalente in cui compaiano solamente i connettivi citati, dopodiché la tesi seguirà per induzione strutturale sulla
 costruzione delle formule (facciamo uso delle leggi di De Morgan e delle altre proprietà note dei connettivi):
 \begin{enumerate}
 	\item
@@ -203,17 +205,206 @@ costruzione delle formule (facciamo uso delle leggi di De Morgan e delle altre p
 			\item $A\liff B\equiv \left( \lnot A\lor \lnot B \right) \lor \left( A \lor B \right) $
 			\item $A\land B\equiv\lnot\left( \lnot A \lor\lnot B \right) $
 		\end{itemize}
+	\item
+		\begin{itemize}
+			\item $A\lor B\equiv\lnot A\limplies B$
+			\item $A\land B\equiv \lnot\left( A\limplies \lnot B \right) $
+			\item $A\liff B\equiv \left( A\limplies B \right) \land \left( B \limplies A \right) \equiv \lnot\left( \left( X \limplies Y \right) \limplies \lnot\left(
+				Y\limplies X \right)  \right) $
+		\end{itemize}
 \end{enumerate}
 Inoltre, per l'esercizio \hyperref[connettivi]{1.17} $\left\{ \land,\lor \right\} $ non possono avere la proprietà menzionata, visto che in particolare una tautologia non può contenere solo tali connettivi.
 \setcounter{exercise}{30}
 \begin{exercise}
 	Per ogni formula $A$ esiste una formula $B\equiv A$ nella quale compare soltanto il connettivo "entrambe false" $\star$.
 \end{exercise}
-Utilizzando l'esercizio 1.29, ci basta mostrare ad esempio che una formula scritta solo con i connettivi $\left\{ \lnot,\lor \right\}$ è equivalente ad una formula che usa solamente il connettivo $\star$: infatti, osserviamo che per
+Utilizzando l'esercizio \hyperref[equivalenze]{1.29}, ci basta mostrare ad esempio che una formula scritta solo con i connettivi $\left\{ \lnot,\lor \right\}$ è equivalente ad una formula che usa solamente il connettivo $\star$: infatti, osserviamo che per
 definizione di tale connettivo si ha, per ogni scelta delle formule $A,B$ :
 \begin{itemize}
 	\item $\lnot A\equiv A\star A$,
 	\item $A\lor B\equiv\lnot\left( A\star B \right) \equiv \left( A\star B \right) \star\left( A\star B \right) $.
 \end{itemize}
 \section{Teorie Proposizionali}
+\setcounter{exercise}{9}
+\begin{exercise}
+Supponendo che $T\models A\limplies B$, mostriamo che l'insoddisfacibilità di $T\cup\left\{ B \right\} $ implica l'insoddisfacibilità di $T\cup\left\{ A \right\} $, ma che non
+vale il viceversa:
+\end{exercise}
+Mostriamo la contronominale: se $I\models T \cup\left\{A\right\}$, allora da $I(A)=I(A\limplies B)=1$ otteniamo (per definizione di interpretazione) che $I(B)=1$, per cui $I\models T\cup \left\{ B \right\} $.
+
+Per vedere che non vale l'implicazione inversa, prendiamo $T=\left\{ \lnot A, B \right\} $ ed osserviamo che $T\models A\limplies B$, e $T\cup\left\{ A \right\} $ è insoddisfacibile,
+mentre $T\cup\left\{ B \right\} $ è chiaramente soddisfacibile.
+\setcounter{exercise}{31}
+\begin{exercise}
+	Sia $f: \N\to\N$ tale che $$\forall n\in\N~f(n)\neq n,$$
+	e sia $\Gamma$ il grafo $(\N,E)$ con $E=\left\{ (n,f(n))\mid n\in\N \right\} $.
+	Allora, il numero cromatico di $\Gamma$ è 3.
+\end{exercise}
+\noindent
+Partiamo col formulare il linguaggio dei grafi $k$-colorati su un insieme fissato di vertici $V$ $$\mathcal{L}_V^k:=\left\{ X_{ab}\mid a\neq b\in V \right\}\cup\left\{ Y_a^i\mid a\in V,
+i=1,\dots,k \right\}$$
+Allora, dato un grafo $(V,E)$ la seguente $\mathcal{L}_V$-teoria è soddisfacibile esattamente quando il grafo è $k$-colorabile:
+$$ T^k_{V,E}:=\left\{ \bigvee_{i=1}^k Y^i_a\mid a\in V\right\} \cup\left\{ X_{ab}\mid (a,b)\in E \right\} \cup \left\{ Y_a^i\limplies\bigwedge_{j\neq i}{\lnot Y^i_a} \right\} \cup
+\left\{ Y_a^i\limplies\lnot Y_b^i\mid a,b\in V,i=1\dots k \right\}  .$$
+Per compattezza proposizionale, $T_{V,E}^k$ è soddisfacibile se e solo se è finitamente soddisfacibile, che a sua volta equivale al fatto che ogni sottografo finito di $(V,E)$ sia
+$k$-colorabile (basta prendere il massimo sottoinsieme finito $(V_0,E_0)$ di coppie di variabili coinvolte nella soddisfacibilità di un sottoinsieme finito della teoria).
+
+Ora, mostriamo che ogni sottografo finito di $\Gamma$ ha numero cromatico $3$, da cui seguirà la tesi: chiaramente è possibile avere sottografi che non sono 2-colorabili (basta
+prendere una $f$ non iniettiva); quindi basta mostrare
+che sono tutti 3-colorabili, e preso un sottografo con $m$ vertici ed al più $m$ archi lo 3-coloriamo per induzione su $n\leq m$. Siano $C_1, C_2$ e $C_3$ i colori a disposizione. Per $n=2$ scegliamo
+due colori diversi a caso; per il
+passo induttivo procediamo come segue: visto che ci sono al più $n$ vertici, dalla formula $$ \sum_{i=1}^n{\operatorname{deg}(i)}=2\cdot\text{\# archi}\leq n$$ segue che esiste un
+vertice con $\leq 2$ vertici, e dato che il grafo ottenuto rimuovendo tale vertice ha una 3-colorazione per ipotesi induttiva, riaggiungendo il vertice che si collega ad al più
+altri due vertici ci basta scegliere un colore diverso da tali due vertici per ottenere una 3-colorazione del grafo originale.
+\setcounter{exercise}{35}
+\begin{exercise}
+	Osserviamo preliminarmente che $X:=\left\{ 0,1 \right\} ^Y$ con la topologia prodotto indotta da quella discreta su $\left\{ 0,1 \right\} $ è compatto se e solo se vale la FIP (Finite Intersection Property) sulle famiglie di chiusi, e che basta controllare tale proprietà
+	sui complementari degli aperti di base della topologia prodotto, che nel caso dello spazio $X$ sono prodotti indicizzati in $Y$ in cui solamente un numero finito di
+	componenti è diverso
+	dall'intero spazio $\left\{ 0,1 \right\}$.
+
+	Ora, per collegarci al contesto delle teorie proposizionali notiamo che, considerando $\mathcal{L}=Y$, si ha che un interpretazione delle $\mathcal{L} $-formule è
+	determinata da una funzione $\operatorname{f}: Y \to \left\{ 0,1 \right\}$, ovvero da un elemento di $\left\{ 0,1 \right\} ^Y$.
+
+	Questo ci consente di formulare una corrispondenza $$\left\{\mathcal{L}\text{-teorie }T\right\}~\underset{i}{\leftarrow}\underset{j}{\rightarrow}~\left\{\mathcal{F}_T=\left\{ C_A \right\} _{A\in T}\right\},$$
+	con quindi i $C_A$ della forma $$\prod_{Y\setminus S_A}{\left\{ 0,1 \right\} }\times\prod_{i\in S_A}{C_i},$$
+	per degli insiemi $S_A$ finiti al variare delle formule $A\in T$, e con $C_i\subsetneq\left\{ 0,1 \right\}~\forall i\in S_A$.\\
+	Infatti, data una teoria $T$ possiamo costruire la famiglia $j(T)$ dei chiusi $C_A=\{ f\in\left\{ 0,1 \right\}^Y\mid f\models A \}
+	$ al variare delle formule $A \in T$.\\
+	D'altronde, data una famiglia di chiusi di base $\mathcal{F}$ come sopra, possiamo associargli la teoria $i(\mathcal{F})$ delle formule corrispondenti alla tabella di
+	verità descritta dalla parte finita del chiuso prodotto $C_A$ ($A\in T$ insieme di indici di $\mathcal{F}$).
+
+	Con questa costruzione, vediamo subito l'equivalenza cercata: se supponiamo la compattezza proposizionale allora una famiglia di chiusi $F_T$ con la FIP ci dà una teoria finitamente
+	soddisfacibile,	e quindi per compattezza un modello per la teoria, ovvero un elemento nell'intersezione globale della famiglia per costruzione di $j$; viceversa, se supponiamo che lo spazio
+	$\left\{ 0,1 \right\}^Y$ sia compatto e consideriamo una teoria finitamente soddisfacibile, allora la famiglia di chiusi associata soddisfa la FIP, e quindi l'intersezione
+	dell'intera famiglia produce un interpretazione
+	della teoria (abbiamo utilizzato profusamente la corrispondenza fra formule e tavole di verità come esplicitata nell'esercizio \textbf{1.12}).
+\end{exercise}
+\begin{exercise*}
+	Sia $\mathcal{U}$ un filtro su di un insieme $I$. Allora, le seguenti affermazioni sono equivalenti:
+	\begin{itemize}
+		\item $\mathcal{U}$ è un ultrafiltro
+		\item $\mathcal{U}$ è un filtro massimale per inclusione
+		\item $\forall C=\sqcup_{i=1}^r{C_i}\in\mathcal{U}~\exists! i\mid C_i\in\mathcal{U}$
+	\end{itemize}
+\end{exercise*}
+Mostriamo rispettivamente $(1)\iff(2)$ ed $(1)\iff(3)$ :\\
+\noindent
+Supponiamo che $\mathcal{U}$ sia un ultrafiltro non massimale; allora esiste un filtro $\mathcal{F}$ che lo contiene strettamente, cioè $\exists
+A\in\mathcal{F}\setminus\mathcal{U}$ ; ma allora $A\not\in\mathcal{U}\implies A^c\in\mathcal{U}\subset\mathcal{F}\implies \emptyset=A\cap A^c\in\mathcal{F}$, che è una
+contraddizione.
+Viceversa, se $\mathcal{U}$ è massimale, vogliamo mostrare che $$\forall A\subset I,~A\not\in\mathcal{U}\implies A^c\in\mathcal{U}:$$ supponiamo infatti che entrambi $A$ ed $A^c$
+non stiano in $\mathcal{U}$ ; allora necessariamente uno dei due ha intersezione non banale con tutti gli elementi di $\mathcal{U}$ (altrimenti, se esistessero $B,
+C\in\mathcal{U}$ con $B\cap A=\emptyset \land C\cap A^c=\emptyset$ avremmo che $\emptyset=B\cap C\in\mathcal{U}$, assurdo). Senza perdita di generalità, supponiamo che $A$ abbia
+questa proprietà, e prendiamo il filtro generato dall'insieme $\mathcal{U}\cup \{A\}$ (notiamo che per quanto osservato tale insieme possiede la FIP, e quindi possiamo
+effettivamente usarlo per definire un filtro come visto in classe). Ma allora, otteniamo un assurdo visto che tale filtro contraddice la massimalità di $\mathcal{U}$.\\
+
+\noindent
+Osserviamo preliminarmente che $(3)$ è equivalente, per induzione, al caso $r=2$.
+Vediamo ora che $(1)\iff(3)$: se $\mathcal{U}$ è un ultrafiltro, allora dato $C=A\sqcup B$ con $C\in\mathcal{U}$ se $A \in\mathcal{U}$ non può esserlo anche $B$, visto che sono
+disgiunti; e se nessuno dei due sta in $\mathcal{U}$ allora i loro complementari ci stanno (per la proprietà di ultrafiltro), ma allora ci sta anche l'intersezione dei
+complementari, ovvero $C^c\in\mathcal{U}$, che è assurdo. Viceversa, se assumiamo che valga $(3)$ e per assurdo $\mathcal{U}$ non è un ultrafiltro, allora $\exists A\subset
+I\mid~A,A^c\not\in \mathcal{U}$. Ma allora, $I=A\sqcup(A\setminus I)\in\mathcal{U}\overset{(3)}{\implies}$ uno fra $A$ ed $A^c$ sta in $\mathcal{U}$, assurdo.
+\begin{exercise*}
+	Dimostrare che $$ \text{PA} \vdash \forall x \exists k~x=2k\lor x=2k+1.$$
+\end{exercise*}
+Usiamo l'induzione al primo ordine su $$\varphi(x):=\exists k~x=2k\lor x=2k+1:$$
+\begin{itemize}
+	\item $\varphi(0)\equiv \exists k~0=2k\lor 0=2k+1$: $$\forall\mathfrak{M}\models \text{PA}~0\in M\implies\exists k\in M~k+k=0$$ (basta prendere $k=0$ ed usare l'assioma $\forall x~
+		x+0=x$ con l'assegnamento $\rho(x)=0$.)
+		Ora, se supponiamo che $\forall x~\varphi(x)$, ovvero $$ \forall x\exists \overline{k}~ 2 x=\overline{k}\lor x=2 \overline{k}+1,$$ allora vogliamo mostrare che $$
+		\exists k~s(x)=2k\lor s(x)=2k+1 .$$ Infatti, procediamo per casi: se $x=2 \overline{k}\implies s(x)=s(x+0)=x+s(0)=2 \overline{k}+1$, quindi possiamo scegliere
+		$k=\overline{k}.$ Se invece $x=2 \overline{k}+1,$ preso $k=\overline{k}+1$ abbiamo che $s(x)=x+1=(2\overline{k}+1)+1=2(\overline{k}+1)=2k.$
+\end{itemize}
+\begin{exercise*}
+	Dimostrare che $$ \text{PA} \vdash \forall x \forall y~~y>x\limplies y \geq s(x)  .$$
+\end{exercise*}
+Ricordiamo che $$x<y \equiv \exists z \neq 0\mid~ x+z=y.$$ Ora, notiamo che
+$$ y\geq s(x) \liff \exists z~y+z=s(x) ,$$
+visto che con l'assioma $\forall x~x+0=x$ possiamo incorporare l'eventuale uguaglianza semplicemente rimuovendo la condizione $z\neq 0$ dalla definizione di uguaglianza.
+Dopodichè, sfruttando l'assioma $$\forall x \forall y~x+s(y)=s(x+y),$$ e la definizione ricordata sopra otteniamo che $$\exists z\neq 0\mid~ s(x)=s(y+z)=y+s(z),$$ che mostra la
+tesi.
+\begin{exercise*}
+	Dimostrare che $$ \text{PA}\vdash \forall x~x\neq s(x) .$$
+\end{exercise*}
+Mostriamolo per induzione al prim'ordine:
+\begin{itemize}
+	\item se $x=0$, allora dall'assioma $$ \forall x~s(x)\neq 0 $$ segue che $0\neq s(0)$. Inoltre, il passo induttivo è $$ \forall x \left( x\neq s(x) \limplies
+	s(x)\neq s(s(x)) \right) ,$$ la cui contronominale è vera per l'assioma $$\forall x \forall y (s(x)=s(y)\limplies x=y).$$
+\end{itemize}
+\begin{exercise*}
+	Sia $\mathcal{U}$ un ultrafiltro banale su  $I$,cioè $\mathcal{U}=\left\{ A\subset I\mid i_0\in A \right\} $ per un qualche $i_0\in I$ fissato. Allora, $$ \frac{\prod_{i\in
+	I}{\mathfrak{M}_i}}{\mathcal{U}}\cong \mathfrak{M}_{i_0} .$$
+\end{exercise*}
+Consideriamo la proiezione di $\mathfrak{M}:=\frac{\prod_{i\in
+I}{\mathfrak{M}_i}}{\mathcal{U}}$ su $\mathfrak{M}_{i_0}$; questa è un immersione perché, essendo l'ultrafiltro principale, le relazioni in $\mathfrak{M}$ valgono tra un insieme di
+termini se e solo se
+valgono quando proiettate su $\mathfrak{M}_{i_0}$. Inoltre, è chiaramente un omomorfismo suriettivo, e quindi essendo un'immersione suriettiva è anche un isomorfismo.
+\begin{exercise*}
+	Trovare una $k-$categorica ma non completa.
+\end{exercise*}
+Consideriamo la teoria $T$ dei gruppi abeliani divisibili senza torsione (ovvero spazi vettoriali su $\Q$), senza imporre alcuna condizione sulla dimensione di tali spazi. Questa è
+$k$-categorica per ogni $k>\aleph_0$ visto che ogni modello $V$ (spazio vettoriale su $\Q$) con $$ |V|=k $$ ha necessariamente $\operatorname{dim}(V)=k ,$ e quindi due tali modelli
+sono necessariamente isomorfi. Inoltre, mostriamo che $T$ non è completa: basta prendere il modello finito $\mathcal{V}=\{0\}\subset \Q$ e considerare l'enunciato $$ \tau:=\exists a \exists b~a\neq b
+,$$ che è falso per ogni assegnamento su $\mathcal{V}$, quindi in particolare $T\not\models\tau$, ma vale anche che $T\not\models\lnot\tau$, visto che in qualsiasi  $\Q$-spazio di
+dimensione $n\geq 1$ ha infiniti elementi distinti.
+\begin{exercise*}
+	Mostrare che la classe dei campi algebricamente chiusi è elementare ma non è definibile.
+\end{exercise*}
+Nel seguito, utilizzeremo due teoremi visti in classe: il primo è che una classe $k$ è definibile se e solo se sia $k$ che $k^c$ sono elementari; il secondo è che una classe è
+elementare se e solo se è chiusa per ultraprodotti ed equivalenze elementari.
+Ricordiamo il seguente risultato algebrico: $$\forall n~\exists \K_n\text{ campo non algebricamente chiuso dove ogni polinomio di grado }\leq n\text{ ha una radice}.$$
+Per dimostrare che $k_{\text{ACF}}$ è elementare, esibiamo una teoria i cui modelli sono tutti e soli gli elementi di $k_{\text{ACF}}$: $$ T_{\text{ACF}}=T_{\text{CAMPI}}\cup\left\{ \forall a_0 \forall a_1
+\exists x~a_0+a_1 x=0 \right\} \cup \left\{ \forall a_0,a_1,a_2 \exists x~a_0+a_1 x+a_2 x\cdot x=0 \right\} \cup \dots .$$
+Ora, procediamo a
+dimostrare che $k_{\text{ACF}}$ non è definibile mostrando che la classe complementare non è chiusa per ultraprodotti (e che quindi non è elementare).
+Dopodiché, definiamo $$ \K:=\frac{\prod_{n\in \N}{\K_n}}{\mathcal{U}} ,$$ con $\mathcal{U}$ ultrafiltro non principale su $\N$ (osserviamo che quindi
+$\mathcal{U}$ contiene il filtro di Frechet). Basta allora dire che il campo $\K$ è algebricamente chiuso per concludere, ma grazie al
+Teorema di Łos, un assioma in $T_{\text{ACF}}\setminus T_{\text{CAMPI}}$ che parla dell'esistenza di uno zero dei polinomi di grado $\leq n$ è soddisfatto da $\K$ se e solo se
+l'insieme degli indici delle componenti in cui è valido sta in $\mathcal{U}$; ma questo insieme sicuramente contiene gli $i\geq n$, perché grazie al fatto algebrico di cui sopra in
+$\K_i$ il polinomio dato dalle componenti
+$i$-esime ha uno zero, e quindi l'insieme degli indici su cui vale l'assioma è cofinito $\implies$ sta in Frechet $\implies$ sta in $\mathcal{U}$.
+\begin{exercise*}
+	Dimostrare che la teoria degli ordini densi ha esattamente 4 teorie complete che la estendono.
+\end{exercise*}
+Osserviamo innanzitutto che la teoria $T$ degli ordini densi senza estremi è completa, visto che ogni modello è isomorfo all'ordine dei razionali per un teorema di elementi di teoria degli
+insiemi. Inoltre, se consideriamo le formule $$\exists x~\forall y~y\leq x$$ ed $$\exists x~\forall y~y\geq x,$$ la teoria $T$ è ottenuta esattamente unendo la teoria degli ordini
+densi con la negazione di tali formule, ed inoltre le altre tre teorie coerenti che si ottengono aggiungendo alla teoria degli ordini densi le altre possibili combinazioni delle suddette due
+formule (negandole o meno) sono tutte complete, visto che si può dimostrare tramite back-and-forth che sono $\aleph_0$-categoriche ed inoltre non hanno modelli finiti (basta essere
+accorti nel trattare i minimi e/o i massimi nei casi in cui ci sono).
+\begin{exercise*}
+	Dimostrare che in $\left( \N,~< \right) $ elementi diversi hanno tipi diversi.
+\end{exercise*}
+Definiamo per induzione forte una formula che identifica univocamente ogni naturale $n\in\N$ :
+\begin{itemize}
+	\item $\phi_0(x):=\forall y~x\leq y$
+	\item $\phi_{n+1}(x):=\forall y~\exists y_0\ldots\exists y_n~\bigwedge_{i=0}^n{\phi_i(y_i)}\land\bigwedge_{i=0}^n{x\neq y_i}\land\bigwedge_{i=0}^n{y\neq y_i}\land x\leq y$
+\end{itemize}
+Ora, $\phi_n(x)$ è una formula con unica variabile libera $x$ soddisfatta da $n\in\N$ e da nessun altro $m\neq n$, quindi tutti gli elementi di $(\N,<)$ hanno necessariamente tipi distinti.
+\begin{exercise*}
+	Dimostrare che in $(\Q,<,+)$ esistono esattamente 3 tipi.
+\end{exercise*}
+Innanzitutto notiamo che le formule
+\begin{itemize}
+	\item $\varphi_1:=x+x=x$
+	\item $\varphi_2:=x+x<x$
+	\item $\varphi_3:=x<x+x$
+\end{itemize}
+mostrano che i tipi di $0,$ i numeri negativi ed i numeri positivi sono distinti.
+Ora, dati $a,b$ diversi da $0$ tali che $$ \varphi_i(x)[\frac{a}{x}] \land \varphi_i(x)[\frac{b}{x}] $$ con $i=1$ oppure $i=2$, osserviamo che c'è un isomorfismo di ordini da $\Q$
+in sè stesso dato da $\phi(x)=x\cdot \frac{b}{a}$. Questo preserva i tipi ed in particolare $\phi(x+x)=\phi(x)+\phi(x).$ Questo mostra che ci sono esattamente tre tipi.
+\begin{exercise*}
+	Mostrare che se $f(\overline{x},y)$ è primitiva ricorsiva, allora $\sum_{i\leq y}{f}$ e $\prod_{i\leq y}{f}$ lo sono.
+\end{exercise*}
+Dette $f_1$ ed $f_2$ rispettivamente la funzione somma e la funzione prodotto di cui sopra, possiamo definirle ricorsivamente come segue: \begin{align*}
+&f_1(\overline{x},0)=f(\overline{x},0)\\
+&f_1(\overline{x},y+1)=(f(\pi_1,s\circ\pi_2)+\pi_3)\left(  \overline{x},y,f(\overline{x},y) \right) \\
+&f_2(\overline{x},0)=f(\overline{x},0)\\
+&f_2(\overline{x},y+1)=(f(\pi_1,s\circ\pi_2)\cdot\pi_3)(\overline{x},y,f(\overline{x},y),\end{align*}
+che quindi mostra che $f_{1,2}$ sono primitive ricorsive, dove $\pi_i$ sono le proiezioni di $\N^3$ sull'$i$-esima componente.
+\begin{exercise*}
+	Mostrare che la funzione successore è definibile, ovvero il suo grafico è un sottoinsieme definibile di $\N^2$.
+\end{exercise*}
+La formula che mostra la tesi è la seguente: $$ \phi(x,y)=\exists u~ (\forall z~z\cdot u=z)\land (x+u=y) ,$$
+ovvero $u$ simboleggia l'unità ed infatti si ha che $(\N,+,\cdot)\models\phi(a,b)\iff b=s(a).$
 \end{document}
